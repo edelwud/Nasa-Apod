@@ -10,13 +10,25 @@
     object-fit: cover;
 }
 
-.col__space_around {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    height: 100vh;
+.pictures__text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pictures__image {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
 }
 
 .hide {
     display: none;
+}
+
+.pictures__topic {
+    width: 100%;
+    text-align: center;
 }
