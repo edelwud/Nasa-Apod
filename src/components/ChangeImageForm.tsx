@@ -2,13 +2,19 @@ import React from "react";
 import moment from "moment";
 
 import Form from "react-bootstrap/Form";
+import ErrorFormat from "../models/ErrorFormat";
 
 type ChangeImageFormProps = {
 	updateAPODImage: React.Dispatch<React.SetStateAction<boolean>>;
+	setError: React.Dispatch<React.SetStateAction<ErrorFormat>>;
 };
 
-export default function ChangeImageForm({ updateAPODImage }: ChangeImageFormProps) {
+export default function ChangeImageForm({ updateAPODImage, setError }: ChangeImageFormProps) {
 	const dateChanged = (event: any) => {
+		if (new Date(event.target.value) > new Date()) {
+			setError({ title: "Error", explanation: "Range error", occurred: true })
+			return;
+		}
 		const date: string = moment(new Date(event.target.value)).format("YYYY-MM-DD");
 		const current: string = moment(new Date()).format("YYYY-MM-DD");
 		date !== current ?
