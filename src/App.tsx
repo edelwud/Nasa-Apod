@@ -7,14 +7,15 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import config from "./constatnts/nasa"
 import ImageFormat from "./models/ImageFormat";
 import {loadImage} from "./services/nasaService";
+import ErrorFormat from "./models/ErrorFormat";
 
 import ImageAPOD from "./components/ImageAPOD"
 import InfoComponent from "./components/InfoComponent";
 import ChangeImageForm from "./components/ChangeImageForm";
-import Toast from "react-bootstrap/Toast";
-import ErrorFormat from "./models/ErrorFormat";
+import Alert from "react-bootstrap/Alert";
 
 function App() {
   const [image, setImage] = useState<ImageFormat>({
@@ -24,7 +25,7 @@ function App() {
     media_type: "image",
     service_version: "",
     title: "",
-    url: ""
+    url: config.ERROR_IMAGE
   });
   const [needUpdate, update] = useState<boolean>(false);
   const [error, setError] = useState<ErrorFormat>({ explanation: "", title: "", occurred: false });
@@ -32,12 +33,24 @@ function App() {
     loadImage(setImage).then(() => {
       setError({ explanation: "", title: "", occurred: false });
     }).catch((result: string) => {
-      console.log(result)
+      setImage({ ...image, title: "Error", explanation: result.toString(), media_type: "image", url: config.ERROR_IMAGE })
       setError({ explanation: result.toString(), title: "Error", occurred: true });
     })
   }, [needUpdate]);
 
-
+  function AlertDismissibleExample() {
+    if (error.occurred) {
+      return (
+        <Alert variant="danger" onClose={() => setError({ ...error, occurred: false })} dismissible>
+          <Alert.Heading>{error.title}</Alert.Heading>
+          <p>
+            {error.explanation}
+          </p>
+        </Alert>
+      );
+    }
+    return <></>
+  }
 
   return (
     <Container>
@@ -46,20 +59,9 @@ function App() {
           <ImageAPOD image={image} />
         </Col>
         <Col sm={4}>
-          <div className="col__space_around">
-            <div>
-              <InfoComponent />
-              <ChangeImageForm updateAPODImage={update} />
-            </div>
-            <div>
-              <Toast className={error.occurred ? "" : "hide"}>
-                <Toast.Header>
-                  <strong className="mr-auto">{error.title}</strong>
-                </Toast.Header>
-                <Toast.Body>{error.explanation}</Toast.Body>
-              </Toast>
-            </div>
-          </div>
+          <InfoComponent />
+          <AlertDismissibleExample />
+          <ChangeImageForm updateAPODImage={update} />
         </Col>
       </Row>
     </Container>

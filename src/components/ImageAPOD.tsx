@@ -11,6 +11,7 @@ export default function ImageAPOD({ image }: ImageAPODProps) {
 	function RenderFragment() {
 		return image.media_type === "video" ?
 			<iframe
+				title={image.title}
 				width="560"
 				height="315"
 				src={image.url}
