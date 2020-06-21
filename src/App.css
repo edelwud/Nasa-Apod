@@ -32,3 +32,10 @@
     width: 100%;
     text-align: center;
 }
+
+.pictures__back-button {
+    font-size: 24px;
+    display: block;
+    width: 100%;
+    text-align: center;
+}

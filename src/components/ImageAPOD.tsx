@@ -25,9 +25,11 @@ export default function ImageAPOD({ image }: ImageAPODProps) {
 
 	return (
 		<Figure>
+			<Figure.Caption>
+				<h1 className="pictures__topic pt-3">{ image.title }</h1>
+			</Figure.Caption>
 			<RenderFragment />
 			<Figure.Caption>
-				<h1>{ image.title }</h1>
 				<p>{ image.explanation }</p>
 			</Figure.Caption>
 		</Figure>

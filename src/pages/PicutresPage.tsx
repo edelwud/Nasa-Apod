@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from "react";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 import {getRecentAPODImage, loadImage} from "../services/nasaService";
 import ImageFormat from "../models/ImageFormat";
+import ErrorFormat from "../models/ErrorFormat";
+import AlertDismissible from "../components/AlertDismissable";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
 type PicturesListProps = {
 	images: ImageFormat[];
@@ -48,6 +52,7 @@ function PicturesList({ images }: PicturesListProps) {
 
 export default function PicturesPage() {
 	const [pictures, setPictures] = useState<ImageFormat[]>([]);
+	const [error, setError] = useState<ErrorFormat>({ explanation: "", occurred: false, title: "" });
 
 	useEffect(() => {
 		const dates = new Array(6)
@@ -60,13 +65,17 @@ export default function PicturesPage() {
 			}
 			return Promise.all(imagesList);
 		}
-		loadPictures().then((result: ImageFormat[]) => setPictures(result));
+		loadPictures().then((result: ImageFormat[]) => setPictures(result)).catch(() => {
+			setError({ title: "Error", explanation: "Error during rendering", occurred: true });
+		});
 	}, []);
 
 	return (
 		<Container className="pt-5">
 			<h1 className="pictures__topic">Astronomy Picture of the Day pictures</h1>
+			<AlertDismissible error={error} setError={setError} />
 			<PicturesList images={pictures} />
+			<Link to="/"><Button className="pictures__back-button mb-5">Back</Button></Link>
 		</Container>
 	);
 }

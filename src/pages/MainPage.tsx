@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Alert from "react-bootstrap/Alert";
 
 import config from "../constatnts/nasa"
 import ImageFormat from "../models/ImageFormat";
@@ -13,7 +14,7 @@ import {loadImage} from "../services/nasaService";
 import ImageAPOD from "../components/ImageAPOD"
 import InfoComponent from "../components/InfoComponent";
 import ChangeImageForm from "../components/ChangeImageForm";
-import Alert from "react-bootstrap/Alert";
+import AlertDismissible from "../components/AlertDismissable";
 
 function MainPage() {
   const [image, setImage] = useState<ImageFormat>({
@@ -36,18 +37,6 @@ function MainPage() {
     })
   }, [needUpdate]);
 
-  function AlertDismissible() {
-    if (error.occurred) {
-      return (
-        <Alert variant="danger" onClose={() => setError({ ...error, occurred: false })} dismissible>
-          <Alert.Heading>{error.title}</Alert.Heading>
-          <p>{error.explanation}</p>
-        </Alert>
-      );
-    }
-    return <></>
-  }
-
   return (
     <Container>
       <Row className="row__centered">
@@ -56,7 +45,7 @@ function MainPage() {
         </Col>
         <Col sm={4}>
           <InfoComponent />
-          <AlertDismissible />
+          <AlertDismissible error={error} setError={setError} />
           <ChangeImageForm setError={setError} updateAPODImage={update} />
           <p>Other pictures u can find <Link to="/pictures">here</Link>.</p>
         </Col>
