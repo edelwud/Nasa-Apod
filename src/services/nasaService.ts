@@ -21,6 +21,6 @@ export async function getRecentAPODImage(date: Date, hdResolution: boolean): Pro
 export async function loadImage(imageUpdate: React.Dispatch<ImageFormat>) {
 	const apodDay = localStorage.getItem("apod_day");
 	apodDay ?
-		imageUpdate(await getRecentAPODImage(new Date(apodDay), true)) :
-		imageUpdate(await getAPODImage(true));
+		imageUpdate(await getRecentAPODImage(new Date(apodDay), false)) :
+		imageUpdate(await getAPODImage(false));
 }

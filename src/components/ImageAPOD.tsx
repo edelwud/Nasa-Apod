@@ -8,9 +8,23 @@ type ImageAPODProps = {
 }
 
 export default function ImageAPOD({ image }: ImageAPODProps) {
+	function RenderFragment() {
+		return image.media_type === "video" ?
+			<iframe
+				width="560"
+				height="315"
+				src={image.url}
+				frameBorder="0"
+				className="figure__apod_image"
+				allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+				allowFullScreen
+			/> :
+			<Figure.Image className="figure__apod_image" src={image.url} fluid />;
+	}
+
 	return (
 		<Figure>
-			<Figure.Image className="figure__apod_image" src={image.url} fluid />
+			<RenderFragment />
 			<Figure.Caption>
 				<h1>{ image.title }</h1>
 				<p>{ image.explanation }</p>

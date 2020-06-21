@@ -9,3 +9,14 @@
     width: 100%;
     object-fit: cover;
 }
+
+.col__space_around {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.hide {
+    display: none;
+}
