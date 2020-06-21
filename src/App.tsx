@@ -7,9 +7,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import ImageAPOD from "./components/ImageAPOD"
 import ImageFormat from "./models/ImageFormat";
 import {loadImage} from "./services/nasaService";
+
+import ImageAPOD from "./components/ImageAPOD"
+import InfoComponent from "./components/InfoComponent";
 
 function App() {
   const [image, setImage] = useState<ImageFormat>({
@@ -27,12 +29,12 @@ function App() {
 
   return (
     <Container>
-      <Row>
-        <Col sm={8} className="apod_block">
+      <Row className="row__centered">
+        <Col sm={8}>
           <ImageAPOD image={image}></ImageAPOD>
         </Col>
         <Col sm={4}>
-          Text
+          <InfoComponent />
         </Col>
       </Row>
     </Container>

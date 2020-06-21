@@ -10,7 +10,7 @@ type ImageAPODProps = {
 export default function ImageAPOD({ image }: ImageAPODProps) {
 	return (
 		<Figure>
-			<Figure.Image src={image.url} fluid />
+			<Figure.Image className="figure__apod_image" src={image.url} fluid />
 			<Figure.Caption>
 				<h1>{ image.title }</h1>
 				<p>{ image.explanation }</p>
