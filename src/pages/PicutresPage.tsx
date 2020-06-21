@@ -60,7 +60,7 @@ export default function PicturesPage() {
 			}
 			return Promise.all(imagesList);
 		}
-		loadPictures().then((result: ImageFormat[]) => setPictures(result)));
+		loadPictures().then((result: ImageFormat[]) => setPictures(result));
 	}, []);
 
 	return (
